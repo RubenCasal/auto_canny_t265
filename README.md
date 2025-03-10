@@ -49,16 +49,19 @@ To start both nodes together:
 ros2 launch auto_canny_t265 canny_detection_launch.py
 ```
 
-## 📡 Published Topics & Data
+## **📡 Published Topics**
 
-This package publishes multiple topics for navigation and image processing.
-Topic Name	Message Type	Description
-/rs_t265/odom	nav_msgs/msg/Odometry	Odometry data (position & pose).
-/rs_t265/imu	sensor_msgs/msg/Imu	IMU data (gyro & acceleration).
-/rs_t265/fisheye_left	sensor_msgs/msg/Image	Left fisheye image from the T265.
-/rs_t265/fisheye_right	sensor_msgs/msg/Image	Right fisheye image from the T265.
-/rs_t265/canny_edge_detection	sensor_msgs/msg/Image	Processed edge-detected fisheye image.
-/tf	tf2_msgs/msg/TFMessage	TF transformations for localization.
+This package publishes multiple topics for **navigation and image processing**.
+
+| **Topic Name**                  | **Message Type**                | **Description**                          |
+|----------------------------------|--------------------------------|------------------------------------------|
+| `/rs_t265/odom`                 | `nav_msgs/msg/Odometry`        | Odometry data (position & pose).        |
+| `/rs_t265/imu`                  | `sensor_msgs/msg/Imu`          | IMU data (gyro & acceleration).         |
+| `/rs_t265/fisheye_left`         | `sensor_msgs/msg/Image`        | Left fisheye image from the T265.       |
+| `/rs_t265/fisheye_right`        | `sensor_msgs/msg/Image`        | Right fisheye image from the T265.      |
+| `/rs_t265/canny_edge_detection` | `sensor_msgs/msg/Image`        | Processed edge-detected fisheye image.  |
+| `/tf`                           | `tf2_msgs/msg/TFMessage`       | TF transformations for localization.    |
+
 
 ## 🎥 Visualizing Results in RViz2
 ### 1️⃣ Launch RViz2
