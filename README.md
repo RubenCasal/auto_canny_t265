@@ -99,8 +99,9 @@ Traditional Canny requires fixed thresholds, making it unreliable under differen
 
 ## 🎯 Why Auto-Canny?
 
-✔ No manual tuning – Adapts automatically to different images.
-✔ Better edge detection – Works well in low-contrast conditions.
-✔ More reliable in real-world applications – Handles lighting variations effectively.
+✔ **No manual tuning** – Adapts automatically to different images.  
+✔ **Better edge detection** – Works well in **low-contrast conditions**.  
+✔ **More reliable in real-world applications** – Handles **lighting variations** effectively.  
 
-This makes Auto-Canny ideal for robotics, SLAM, and vision-based tasks, where edge clarity matters despite changing environments. 🚀
+This makes **Auto-Canny ideal for robotics, SLAM, and vision-based tasks**, where **edge clarity matters** despite changing environments. 🚀  
+
