@@ -11,6 +11,9 @@ This **ROS2 package** integrates the **Intel RealSense T265 Tracking Camera** wi
 - **Python Node (`auto_canny_node`)**: Applies **Auto-Canny edge detection** on fisheye images.
 - **Launch File**: Starts both nodes in ROS2.
 
+![Auto-Canny Edge Detection](auto_canny_detection.gif)
+
+
 ## 📸 Features
 ✔ **Real-time Odometry & IMU Data**  
 ✔ **Fisheye Image Publishing**  
