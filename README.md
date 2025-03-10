@@ -22,7 +22,7 @@ This **ROS2 package** integrates the **Intel RealSense T265 Tracking Camera** wi
 
 ## 🚀 Installation & Setup
 
-### 1️⃣ Clone the Repository
+### Clone the Repository
 Ensure you have the Librealsense2 library compatible with your system
 
 ```bash
