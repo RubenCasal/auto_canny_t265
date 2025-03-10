@@ -3,7 +3,7 @@
 ![ROS2](https://img.shields.io/badge/ROS2-Humble-blue.svg)
 ![C++](https://img.shields.io/badge/C%2B%2B-17-blue.svg)
 ![Python](https://img.shields.io/badge/Python-3.8+-yellow.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
+
 
 ## 📌 Overview
 This **ROS2 package** integrates the **Intel RealSense T265 Tracking Camera** with **OpenCV** for real-time motion tracking and fisheye image processing. The package provides:
@@ -23,6 +23,8 @@ This **ROS2 package** integrates the **Intel RealSense T265 Tracking Camera** wi
 ## 🚀 Installation & Setup
 
 ### 1️⃣ Clone the Repository
+Ensure you have the Librealsense2 library compatible with your system
+
 ```bash
 cd ~/ros2_ws/src
 git clone git@github.com:RubenCasal/auto_canny_t265.git
@@ -30,71 +32,75 @@ cd ~/ros2_ws
 colcon build --packages-select auto_canny_t265
 source install/setup.bash
 ```
-2️⃣ Check Dependencies
+## 🏁 Running the Package
+Run Nodes Separately
+### Start the T265 Node (C++)
+```
+ros2 run auto_canny_t265 t265_node
+```
+### Start the Auto-Canny Node (Python)
+```
+ros2 run auto_canny_t265 auto_canny_node
+```
+### Run with Launch File
 
-Ensure you have Intel RealSense SDK and required ROS2 dependencies installed:
-sudo apt update
-sudo apt install ros-humble-vision-opencv ros-humble-cv-bridge ros-humble-tf2-ros \
-                 ros-humble-tf2-geometry-msgs ros-humble-tf2-sensor-msgs \
-                 ros-humble-nav-msgs librealsense2 librealsense2-dev
-
-🏁 Running the Package
-Start the Nodes
-```bash
+To start both nodes together:
+```
 ros2 launch auto_canny_t265 canny_detection_launch.py
-
-This will:
-
-    Start the T265 node (t265_node - C++).
-    Start the Auto-Canny node (auto_canny_node - Python).
 ```
-Check ROS2 Topics
 
-List active topics:
-```bash
-ros2 topic list
+## 📡 Published Topics & Data
+
+This package publishes multiple topics for navigation and image processing.
+Topic Name	Message Type	Description
+/rs_t265/odom	nav_msgs/msg/Odometry	Odometry data (position & pose).
+/rs_t265/imu	sensor_msgs/msg/Imu	IMU data (gyro & acceleration).
+/rs_t265/fisheye_left	sensor_msgs/msg/Image	Left fisheye image from the T265.
+/rs_t265/fisheye_right	sensor_msgs/msg/Image	Right fisheye image from the T265.
+/rs_t265/canny_edge_detection	sensor_msgs/msg/Image	Processed edge-detected fisheye image.
+/tf	tf2_msgs/msg/TFMessage	TF transformations for localization.
+
+## 🎥 Visualizing Results in RViz2
+### 1️⃣ Launch RViz2
+
+Start RViz2:
 ```
-Expected topics:
-
-/rs_t265/odom
-/rs_t265/imu
-/rs_t265/fisheye_left
-/rs_t265/fisheye_right
-/rs_t265/canny_edge_detection
-/tf
-
-Visualize Data
-🛰️ Odometry & IMU
-```bash
-ros2 topic echo /rs_t265/odom
-ros2 topic echo /rs_t265/imu
+rviz2
 ```
-📷 Fisheye & Canny Edge Detection
-```bash
-ros2 run rqt_image_view rqt_image_view
-```
-Select:
+### 2️⃣ Add Required Displays
 
-    /rs_t265/fisheye_left
-    /rs_t265/fisheye_right
-    /rs_t265/canny_edge_detection
+Once RViz2 is open:
 
-⚙️ Nodes Overview
-🟢 C++ Node: t265_node
+      Click "Add" → "By Topic".
+  
+      Select:
+          /rs_t265/odom → Odometry (for trajectory visualization).
+          /rs_t265/imu → IMU (for orientation data).
+          /rs_t265/fisheye_left → Image (for raw camera feed).
+          /rs_t265/canny_edge_detection → Image (for edge-detected images).
+          /tf → TF (for viewing the transform frames).
+  
+      Adjust settings as needed and view real-time sensor data.
 
-    t265_node handles:
+## Python Node: auto_canny_node.py
 
-    Intel RealSense T265 Sensor Integration
-    Publishing Odometry & IMU Data
-    Publishing Left & Right Fisheye Images
-    TF Transform Broadcasts
+The Auto-Canny Node enhances edge detection by dynamically adjusting thresholds based on image characteristics. It processes fisheye images from the Intel RealSense T265, making edge detection more adaptive and robust than the traditional Canny method.
+## 🛠 How Auto-Canny Works
+### 1️⃣ Bilateral Filtering: Noise Reduction Without Losing Edges
 
-📌 Published Topics:
-Topic	Type	Description
-/rs_t265/odom	nav_msgs/msg/Odometry	Odometry data (position & pose)
-/rs_t265/imu	sensor_msgs/msg/Imu	IMU data (gyro & acceleration)
-/rs_t265/fisheye_left	sensor_msgs/msg/Image	Left fisheye image
-/rs_t265/fisheye_right	sensor_msgs/msg/Image	Right fisheye image
-/tf	tf2_msgs/msg/TFMessage	TF transformation broadcast
+Unlike Gaussian Blur, Bilateral Filtering smooths the image while preserving edges, reducing noise without blurring important details.
+### 2️⃣ Adaptive Canny Edge Detection: Smart Threshold Selection
 
+Traditional Canny requires fixed thresholds, making it unreliable under different lighting. Auto-Canny solves this by:
 
+    Computing the median intensity of the image.
+    Defining adaptive lower and upper thresholds based on the median.
+    Applying Canny edge detection dynamically.
+
+## 🎯 Why Auto-Canny?
+
+✔ No manual tuning – Adapts automatically to different images.
+✔ Better edge detection – Works well in low-contrast conditions.
+✔ More reliable in real-world applications – Handles lighting variations effectively.
+
+This makes Auto-Canny ideal for robotics, SLAM, and vision-based tasks, where edge clarity matters despite changing environments. 🚀
