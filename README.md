@@ -99,9 +99,9 @@ Unlike Gaussian Blur, Bilateral Filtering smooths the image while preserving edg
 
 Traditional Canny requires fixed thresholds, making it unreliable under different lighting. Auto-Canny solves this by:
 
-    Computing the median intensity of the image.
-    Defining adaptive lower and upper thresholds based on the median.
-    Applying Canny edge detection dynamically.
+- Computing the median intensity of the image.
+- Defining adaptive lower and upper thresholds based on the median.
+- Applying Canny edge detection dynamically.
 
 ## 🎯 Why Auto-Canny?
 
